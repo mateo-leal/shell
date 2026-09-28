@@ -30,6 +30,13 @@ local function create_bind(keybinds, action, flags)
     end
 end
 
+-- AZERTY fix: the number-row keys emit symbols (& é " ' ...) without Shift, so
+-- binding to the digit characters fails. Bind by physical keycode instead.
+-- Digit d -> evdev keycode: 1..9 => 10..18, 0 => 19
+local function digitCode(d)
+    return "code:" .. (d == 0 and 19 or (9 + d))
+end
+
 -- Window manipulation
 create_bind(mainMod .. " + Escape",      hl.dsp.exec_cmd("hyprctl kill"))
 create_bind(mainMod .. " + Q",           hl.dsp.window.close())
