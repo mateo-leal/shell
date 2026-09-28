@@ -16,9 +16,7 @@ QtObject {
     readonly property int barSpacing: 14
     readonly property int statusSpacing: 11
     readonly property int separatorHeight: 16
-    readonly property int iconSize: 22
-    readonly property int actionIconSize: 22
-    readonly property int notificationIconSize: 22
+    readonly property int iconSize: 24
     readonly property int titleSize: 16
     readonly property int clockSize: 12
     readonly property int bodySize: 12
@@ -27,6 +25,8 @@ QtObject {
     readonly property int actionWidth: 30
     readonly property int actionHeight: 28
     readonly property int actionRadius: 8
+    readonly property int volumeTextSize: 10
+    readonly property int volumeHorizontalInset: 8
     readonly property int islandWidth: 390
     readonly property int islandHeight: 34
     readonly property int islandInset: 13
@@ -46,7 +46,6 @@ QtObject {
     readonly property int notificationCardSpacing: 3
     readonly property int islandContentSpacing: 10
     readonly property int islandMetadataSpacing: 1
-    readonly property int mediaControlIconSize: 13
     readonly property int controlsContentSpacing: 13
     readonly property int controlGridSpacing: 9
     readonly property int controlVolumeSpacing: 9

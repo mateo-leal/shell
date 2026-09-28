@@ -1,6 +1,7 @@
 import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Bluetooth
+import Quickshell.Services.Pipewire
 import QtQuick
 import "../services"
 
@@ -36,7 +37,7 @@ Item {
         spacing: Theme.barSpacing
 
         Text {
-            text: ""
+            text: "\ueb94"
             color: Theme.textPrimary
             font.family: Theme.iconFontFamily
             font.pixelSize: Theme.iconSize
@@ -66,7 +67,7 @@ Item {
 
     DynamicIsland {
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.top: parent.top
         volumePulse: root.volumePulse
         notificationPulse: root.notificationPulse
         latestNotification: root.latestNotification
@@ -93,6 +94,50 @@ Item {
         }
 
         Rectangle {
+            width: volumeContent.implicitWidth + Theme.volumeHorizontalInset * 2
+            height: Theme.actionHeight
+            radius: Theme.actionRadius
+            color: volumeMouse.containsMouse ? Theme.actionHover : "transparent"
+
+            Row {
+                id: volumeContent
+                anchors.centerIn: parent
+                spacing: 4
+
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: Theme.textPrimary
+                    font.family: Theme.iconFontFamily
+                    font.pixelSize: Theme.iconSize
+                    text: {
+                        const audio = Pipewire.defaultAudioSink ? Pipewire.defaultAudioSink.audio : null
+                        if (!audio || audio.muted) return ""
+                        if (audio.volume < 0.35) return ""
+                        if (audio.volume < 0.70) return ""
+                        return ""
+                    }
+                }
+
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: Theme.textPrimary
+                    font.family: Theme.uiFontFamily
+                    font.pixelSize: Theme.volumeTextSize
+                    text: Pipewire.defaultAudioSink
+                        ? Math.round(Pipewire.defaultAudioSink.audio.volume * 100) + "%"
+                        : "--"
+                }
+            }
+
+            MouseArea {
+                id: volumeMouse
+                anchors.fill: parent
+                hoverEnabled: true
+                onClicked: root.toggleQuickSettings()
+            }
+        }
+
+        Rectangle {
             width: 1
             height: Theme.separatorHeight
             color: Theme.divider
@@ -110,7 +155,7 @@ Item {
                 text: "󰒓"
                 color: Theme.textPrimary
                 font.family: Theme.iconFontFamily
-                font.pixelSize: Theme.actionIconSize
+                font.pixelSize: Theme.iconSize
             }
 
             MouseArea {
@@ -132,7 +177,7 @@ Item {
                 text: root.notificationsEnabled ? "󰂚" + (root.notificationCount > 0 ? root.notificationCount : "") : "󰂛"
                 color: Theme.textPrimary
                 font.family: Theme.iconFontFamily
-                font.pixelSize: Theme.notificationIconSize
+                font.pixelSize: Theme.iconSize
             }
 
             MouseArea {

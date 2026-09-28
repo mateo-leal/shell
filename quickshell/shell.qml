@@ -11,7 +11,7 @@ import "services"
 ShellRoot {
     id: root
 
-    property bool notificationsEnabled: false
+    property bool notificationsEnabled: true
     property bool volumePulse: false
     property bool notificationPulse: false
     property var latestNotification: null

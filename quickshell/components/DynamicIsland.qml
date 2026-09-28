@@ -13,6 +13,8 @@ Item {
 
     Rectangle {
         anchors.fill: parent
+        topLeftRadius: 0
+        topRightRadius: 0
         radius: height / 2
         color: Theme.panel
         opacity: Theme.islandOpacity
@@ -100,10 +102,10 @@ Item {
 
             Text {
                 anchors.verticalCenter: parent.verticalCenter
-                text: modelData.isPlaying ? "Ⅱ" : "▶"
+                text: modelData.isPlaying ? "" : ""
                 color: Theme.textPrimary
                 font.family: Theme.iconFontFamily
-                font.pixelSize: Theme.mediaControlIconSize
+                font.pixelSize: Theme.iconSize
                 MouseArea {
                     anchors.fill: parent
                     onClicked: modelData.togglePlaying()
