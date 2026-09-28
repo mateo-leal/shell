@@ -96,7 +96,7 @@ create_bind(mainMod .. " + SHIFT + B",             hl.dsp.exec_cmd(launchPrefix 
 create_bind(mainMod .. " + SHIFT + slash",         hl.dsp.exec_cmd("bitwarden-desktop"))
 -- create_bind(mainMod .. " + Z",          hl.dsp.exec_cmd(noctCall .. "settings-toggle"))
 -- create_bind(mainMod .. " + X",          hl.dsp.exec_cmd(noctCall .. "panel-toggle control-center"))
--- create_bind(mainMod .. " + Space",      hl.dsp.exec_cmd(noctCall .. "panel-toggle launcher"))
+create_bind(mainMod .. " + Space",      hl.dsp.exec_cmd(launchPrefix .. LAUNCHER))
 -- create_bind(mainMod .. " + period",     hl.dsp.exec_cmd(noctCall .. "panel-toggle launcher /emo"))
 -- create_bind(mainMod .. " + L",          hl.dsp.exec_cmd(noctCall .. "session lock"))
 -- create_bind(mainMod .. " + ALT + C",    hl.dsp.exec_cmd(noctCall .. "panel-toggle session"))
