@@ -1,0 +1,5 @@
+module Shell.Services
+NetworkStatus 1.0 NetworkStatus.qml
+HyprlandState 1.0 HyprlandState.qml
+singleton Theme 1.0 Theme.qml
+ShellPalette 1.0 ShellPalette.qml

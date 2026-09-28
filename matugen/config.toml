@@ -1,0 +1,12 @@
+version_check = false
+fallback_color = "#739F91"
+caching = false
+
+[config.wallpaper]
+set = false
+command = ""
+
+[templates.palette]
+input_path = "./palette.qml"
+output_path = "../services/ShellPalette.qml"
+type = "SchemeExpressive"

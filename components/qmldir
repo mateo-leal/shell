@@ -1,0 +1,6 @@
+module Shell.Components
+Bar 1.0 Bar.qml
+DynamicIsland 1.0 DynamicIsland.qml
+StatusTray 1.0 StatusTray.qml
+QuickSettings 1.0 QuickSettings.qml
+NotificationCenter 1.0 NotificationCenter.qml
