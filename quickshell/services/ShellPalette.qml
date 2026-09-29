@@ -10,6 +10,7 @@ QtObject {
     readonly property color secondary: "#a4cddc"
     readonly property color secondaryContainer: "#224c59"
     readonly property color tertiary: "#8cd3d2"
+    readonly property color tertiaryText: "#003737"
     readonly property color background: "#0c1514"
     readonly property color surface: "#0c1514"
     readonly property color surfaceVariant: "#394a48"

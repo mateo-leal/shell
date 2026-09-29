@@ -4,6 +4,7 @@ import Quickshell.Services.Pipewire
 import Quickshell.Services.Mpris
 import Quickshell.Services.Notifications
 import Quickshell.Bluetooth
+import Quickshell.Hyprland
 import QtQuick
 import "components" as Components
 import "services"
@@ -15,10 +16,36 @@ ShellRoot {
     property bool volumePulse: false
     property bool notificationPulse: false
     property var latestNotification: null
+    property var specialWorkspaceByMonitor: ({})
     property var notificationModel: notificationHost.item ? notificationHost.item.trackedNotifications : []
     property int notificationCount: notificationHost.item ? notificationHost.item.trackedNotifications.count : 0
 
     NetworkStatus { id: networkStatus }
+
+    Process {
+        id: specialWorkspaceQuery
+        command: ["hyprctl", "-j", "monitors"]
+        running: true
+        stdout: StdioCollector {
+            onStreamFinished: {
+                const monitorStates = ({})
+                for (const monitor of JSON.parse(this.text)) {
+                    const special = monitor.specialWorkspace
+                    monitorStates[monitor.name] = special && special.id !== 0
+                        ? special.name.replace(/^special:/, "")
+                        : ""
+                }
+                root.specialWorkspaceByMonitor = monitorStates
+            }
+        }
+    }
+
+    Timer {
+        interval: 500
+        running: true
+        repeat: true
+        onTriggered: specialWorkspaceQuery.running = true
+    }
 
     Loader {
         id: notificationHost
@@ -65,6 +92,7 @@ ShellRoot {
                 required property var modelData
                 property bool quickSettingsVisible: false
                 property bool notificationsVisible: false
+                readonly property var targetMonitor: Hyprland.monitorFor(modelData)
 
                 PanelWindow {
                     screen: perScreen.modelData
@@ -79,6 +107,9 @@ ShellRoot {
                     Components.Bar {
                         anchors.fill: parent
                         screen: perScreen.modelData
+                        specialWorkspaceName: perScreen.targetMonitor
+                            ? root.specialWorkspaceByMonitor[perScreen.targetMonitor.name] || ""
+                            : ""
                         volumePulse: root.volumePulse
                         notificationPulse: root.notificationPulse
                         latestNotification: root.latestNotification

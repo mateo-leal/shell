@@ -17,6 +17,11 @@ QtObject {
     readonly property int statusSpacing: 11
     readonly property int separatorHeight: 16
     readonly property int iconSize: 24
+    readonly property int workspaceDotSize: 7
+    readonly property int workspacePillWidth: 22
+    readonly property int workspaceMarkerSpacing: 6
+    readonly property int workspaceSpecialHeight: 20
+    readonly property int workspaceSpecialInset: 7
     readonly property int titleSize: 16
     readonly property int clockSize: 12
     readonly property int bodySize: 12
@@ -68,5 +73,7 @@ QtObject {
     readonly property color selectedText: generatedPalette.primaryContainerText
     readonly property color accent: generatedPalette.primary
     readonly property color accentText: generatedPalette.primaryText
+    readonly property color specialWorkspaceColor: generatedPalette.tertiary
+    readonly property color specialWorkspaceText: generatedPalette.tertiaryText
     readonly property color error: generatedPalette.errorColor
 }

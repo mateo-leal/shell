@@ -14,6 +14,7 @@ Item {
     }
 
     required property var screen
+    property string specialWorkspaceName: ""
     property bool ethernetConnected: false
     property string connectionState: "Checking"
     property bool notificationsEnabled: false
@@ -45,14 +46,57 @@ Item {
 
         Rectangle { width: 1; height: Theme.separatorHeight; color: Theme.divider; anchors.verticalCenter: parent.verticalCenter }
 
-        Text {
-            color: Theme.textPrimary
-            font.pixelSize: Theme.iconSize
-            text: {
-                const monitor = Hyprland.monitorFor(root.screen)
-                return monitor && monitor.activeWorkspace ? "󰍹 " + monitor.activeWorkspace.name : "󰍹"
+        Row {
+            id: workspaceMarkers
+            readonly property var targetMonitor: Hyprland.monitorFor(root.screen)
+
+            anchors.verticalCenter: parent.verticalCenter
+            spacing: Theme.workspaceMarkerSpacing
+
+            Repeater {
+                model: Hyprland.workspaces
+
+                delegate: Rectangle {
+                    required property var modelData
+
+                    readonly property bool isSpecial: modelData.name.startsWith("special:")
+                    readonly property bool belongsToMonitor: modelData.monitor === workspaceMarkers.targetMonitor
+                    readonly property bool isActive: belongsToMonitor && modelData.active
+
+                    visible: belongsToMonitor && !isSpecial
+                    width: belongsToMonitor && !isSpecial
+                        ? (isActive ? Theme.workspacePillWidth : Theme.workspaceDotSize)
+                        : 0
+                    height: Theme.workspaceDotSize
+                    radius: height / 2
+                    color: isActive ? Theme.accent : Theme.divider
+
+                    MouseArea {
+                        anchors.fill: parent
+                        enabled: parent.belongsToMonitor && !parent.isSpecial
+                        onClicked: parent.modelData.activate()
+                    }
+                }
             }
-            font.family: Theme.iconFontFamily
+
+            Rectangle {
+                visible: root.specialWorkspaceName !== ""
+                width: visible ? specialName.implicitWidth + Theme.workspaceSpecialInset * 2 : 0
+                height: Theme.workspaceSpecialHeight
+                radius: height / 2
+                color: Theme.specialWorkspaceColor
+
+                Text {
+                    id: specialName
+                    anchors.centerIn: parent
+                    color: Theme.specialWorkspaceText
+                    font.family: Theme.uiFontFamily
+                    font.pixelSize: Theme.microSize
+                    font.bold: true
+                    text: root.specialWorkspaceName.toUpperCase()
+                    elide: Text.ElideRight
+                }
+            }
         }
 
         Text {

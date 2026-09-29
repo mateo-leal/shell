@@ -10,6 +10,7 @@ QtObject {
     readonly property color secondary: "{{ colors.secondary.default.hex }}"
     readonly property color secondaryContainer: "{{ colors.secondary_container.default.hex }}"
     readonly property color tertiary: "{{ colors.tertiary.default.hex }}"
+    readonly property color tertiaryText: "{{ colors.on_tertiary.default.hex }}"
     readonly property color background: "{{ colors.background.default.hex }}"
     readonly property color surface: "{{ colors.surface.default.hex }}"
     readonly property color surfaceVariant: "{{ colors.surface_variant.default.hex }}"
